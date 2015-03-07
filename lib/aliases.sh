@@ -52,7 +52,7 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 # Looks up to the history
-alias hgrep='history | grep -i'
+alias hgrep='history | grep'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -72,5 +72,8 @@ alias sshx="TERM=xterm-256color LANG=en_US.UTF-8 ssh -Y"
 
 # Enhanced mosh for 256 colors
 alias moshx="LANG=en_US.UTF-8 mosh"
+
+alias webserver='python2.7 -m SimpleHTTPServer'
+alias webserver3='python -m http.server'
 
 #@@@@@@@@@@@@@@@@@@@
