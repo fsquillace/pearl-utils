@@ -34,11 +34,8 @@ alias t='tree'
 alias ll="l -l"
 alias la="a -l"
 
-alias share="cd ${PEARL_ROOT}/share"
 alias home="cd ${HOME}"
 alias ~="cd ${HOME}"
-alias etc="cd ${PEARL_ROOT}/etc"
-alias bin="cd ${PEARL_ROOT}/bin"
 
 # Allows to keep aliases in sudo
 alias sudo="sudo "
@@ -59,7 +56,7 @@ alias hgrep='history | grep'
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 # Open screen+irssi
-alias scrssi="screen -S scrssi -aARd -c ${PEARL_ROOT}/etc/screenrc -t irssi irssi; clear"
+alias scrssi="screen -S scrssi -aARd -t irssi irssi; clear"
 
 # less case insensitive
 alias less="less -i"

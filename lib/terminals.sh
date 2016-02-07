@@ -7,8 +7,11 @@ if [ -n "$TMUX" ]; then
     esac
 
     # Home/End keys in tmux
-    bind '"\e[1~":"\eOH"'
-    bind '"\e[4~":"\eOF"'
+    if [ "$BASH" != "" ]
+    then
+        bind '"\e[1~":"\eOH"'
+        bind '"\e[4~":"\eOF"'
+    fi
 
     PEARL_SESSION_NAME=$(tmux display-message -p '#S')
     PEARL_WINDOW_INDEX=$(tmux display-message -p '#I')
