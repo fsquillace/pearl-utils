@@ -6,23 +6,16 @@ alias ..="cd .."
 alias ...="cd ../.."
 alias "cd.."="cd .."
 alias "cd-"="cd -"
-alias "cd~"="cd ${HOME}"
+alias "cd~"="cd $HOME"
 
-# Mini-aliases :)`
+# Mini-aliases :)
 alias j="jobs"
 alias f="fg"
 alias b="bg"
 alias q="exit"
 alias ls="/bin/ls --color=auto"
 
-# Only the newer version of ls support the option --group-directories-first
-ls --group-directories-first &> /dev/null
-if [ "$?" -eq 0 ]; then
-    alias l="ls --group-directories-first --color=auto -h"
-else
-    alias l="ls --color=auto -h"
-fi
-
+alias l="ls --color=auto -h"
 alias a="ls -ha"
 alias c="cal"
 alias d="date"
@@ -34,8 +27,8 @@ alias t='tree'
 alias ll="l -l"
 alias la="a -l"
 
-alias home="cd ${HOME}"
-alias ~="cd ${HOME}"
+alias home="cd $HOME"
+alias ~="cd $HOME"
 
 # Allows to keep aliases in sudo
 alias sudo="sudo "
@@ -51,18 +44,11 @@ alias egrep='egrep --color=auto'
 # Looks up to the history
 alias hgrep='history | grep'
 
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-
 # Open screen+irssi
 alias scrssi="screen -S scrssi -aARd -t irssi irssi; clear"
 
 # less case insensitive
 alias less="less -i"
-
-# If the system has htop use it!
-[ -e /usr/bin/htop ] && alias top="/usr/bin/htop"
 
 # Enhanced ssh for X11 forwarding and 256 colors
 alias sshx="TERM=xterm-256color LANG=en_US.UTF-8 ssh -Y"
