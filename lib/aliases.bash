@@ -2,6 +2,8 @@
 #@@ Aliases
 #@@@@@@@@@@@@@@@@@@
 
+alias ~="cd $HOME"
+
 # If the system has htop use it!
 [ -e /usr/bin/htop ] && alias top="/usr/bin/htop"
 

@@ -27,9 +27,6 @@ alias t='tree'
 alias ll="l -l"
 alias la="a -l"
 
-alias home="cd $HOME"
-alias ~="cd $HOME"
-
 # Allows to keep aliases in sudo
 alias sudo="sudo "
 #alias sudo="sudo -E"    # Useful to keep variables environment when you are root
