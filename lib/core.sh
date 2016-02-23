@@ -16,7 +16,8 @@ fi
 #** Generic variables
 #*******************
 export EDITOR=vim
-export VISUAL=$EDITOR # some programs use this instead of EDITOR
+# some programs use this instead of EDITOR
+export VISUAL=$EDITOR
 
 #*******************
 #** Bindings
@@ -31,11 +32,11 @@ fi
 #*******************
 #** History
 #*******************
-export HISTFILESIZE=100000
-export HISTSIZE=100000
-export HISTIGNORE="&:l[las]:[bf]g:l:a:j:f:b:e"
-export HISTCONTROL=erasedups:ignorespace
-[ -z $HISTFILE ] && export HISTFILE=$HOME/.bash_history
+HISTFILESIZE=100000
+HISTSIZE=100000
+HISTIGNORE="&:l[las]:[bf]g:l:a:j:f:b:e"
+HISTCONTROL=erasedups:ignorespace
+[ -z $HISTFILE ] && HISTFILE=$HOME/.bash_history
 
 if [ "$BASH" != "" ]
 then

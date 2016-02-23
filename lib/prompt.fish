@@ -54,8 +54,9 @@ function fish_prompt --description 'Write out the prompt'
     echo -n ']'
     set_color normal
 
-    set -l job_number (jobs | wc -l)
-    if test $last_status -ne 0 -o $job_number -gt 0
+    set -l job_count (jobs | wc -l)
+    set -l trash_count (trash -c)
+    if test $last_status -ne 0 -o $job_count -gt 0 -o $trash_count -gt 0
         set_color $retc
         if [ $tty = tty ]
             echo -n '-'
@@ -70,9 +71,13 @@ function fish_prompt --description 'Write out the prompt'
             set_color $retc
             echo -n $last_status
         end
-        if test $job_number -gt 0
+        if test $job_count -gt 0
             set_color yellow
-            echo -n $job_number
+            echo -n $job_count
+        end
+        if test $trash_count -gt 0
+            set_color blue
+            echo -n $trash_count
         end
         set_color green
         echo -n ]
