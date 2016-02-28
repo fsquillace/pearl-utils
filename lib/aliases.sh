@@ -38,6 +38,8 @@ alias goo="ping www.google.com"
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
+alias pgrep2="ps -ef | grep"
+
 # Looks up to the history
 alias hgrep='history | grep'
 
