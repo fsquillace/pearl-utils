@@ -1,38 +1,41 @@
 # This function is a wrapper for cd including some functionalities
-function cd() {
+function cw() {
     #################### BEGIN OPTION PARSING ############################
-    local TEMP=`getopt -o g:a:r:p:h --long go:,add:,remove:,print:,help -n 'cd' -- "$@"`
-
-    if [ $? != 0 ] ; then echo "Error on parsing the command line. Try cd -h" >&2 ; return ; fi
-
-    # Note the quotes around `$TEMP': they are essential!
-    eval set -- "$TEMP"
-
-    local OPT_ADD=""
-    local OPT_REMOVE=""
-    local OPT_GO=""
-    local OPT_PRINT=""
+    local OPT_ADD=false
+    local OPT_KEY=""
+    local OPT_REMOVE=false
+    local OPT_GO=false
+    local OPT_PRINT=false
     local OPT_HELP=false
-    while true ; do
-	case "$1" in
-            -g|--go) shift; OPT_GO="$1" ; shift ;;
-            -a|--add) shift; OPT_ADD="$1" ; shift ;;
-            -r|--remove) shift; OPT_REMOVE="$1" ; shift ;;
-	    -p|--print) shift; OPT_PRINT="$1" ; shift ;;
+    for opt in "$@"
+    do
+	case $1 in
+            -g|--go) shift; OPT_GO=true; OPT_KEY="$1" ; shift ;;
+            -a|--add) shift; OPT_ADD=true; OPT_KEY="$1" ; shift ;;
+            -r|--remove) shift; OPT_REMOVE=true; OPT_KEY="$1" ; shift ;;
+	    -p|--print) shift; OPT_PRINT=true; OPT_KEY="$1" ; shift ;;
             -h|--help) OPT_HELP=true ; shift ;;
             --) shift ; break ;;
-	    *) echo "Internal error!" ; return ;;
+            -) break ;;
+            -*) echo "Invalid option $1" ;;
+            *) break ;;
 	esac
     done
 
+    ARGS=()
+    for arg in "$@"
+    do
+            ARGS+=("$arg")
+    done
 
     if $OPT_HELP
     then
-        echo "Usage: cd [options] [key]"
+        echo "Change workspace"
+        echo "Usage: cw [options]"
         echo -e "List all the bookmarks entries"
         echo -e "Options:"
         echo -e "\t-g, --go [key]              Go to the directory specified by the key"
-        echo -e "\t-a, --add <entry> [path]    Add the specified PATH assigning the ENTRY."
+        echo -e "\t-a, --add <key> [path]      Add the specified PATH assigning the ENTRY."
         echo -e "\t                            The entry key must contain alphanumeric and underscore chars."
         echo -e "\t                            The path is the current wd if PATH is not specified."
         echo -e "\t-r, --remove key            Remove an entry"
@@ -41,26 +44,21 @@ function cd() {
         return 0
     fi
 
-    local args=()
-    for arg do
-        args+=("$arg")
-    done
-
     #################### END OPTION PARSING ############################
 
     local bookmarks_file="$PEARL_HOME/bookmarks"
     touch $bookmarks_file
 
-    if [ "$OPT_ADD" != ""  ]
+    if $OPT_ADD
     then
         # Checks first if key is an alphanumeric char
-        if ! echo "$OPT_ADD" | grep '^\w*$' > /dev/null
+        if ! echo "$OPT_KEY" | grep -q '^\w*$'
         then
-            echo "The entry key $OPT_ADD is not valid. It must only contain alphanumeric and underscore chars."
+            echo "The entry key $OPT_KEY is not valid. It must only contain alphanumeric and underscore chars."
             return 128
         fi
 
-        local path=${args}
+        local path=${ARGS}
         if [ -z "$path" ]; then
             local path="."
         fi
@@ -70,38 +68,35 @@ function cd() {
             echo "$abs_path is not a directory."
             return 128
         fi
+        echo "$OPT_KEY:$abs_path" >> "$bookmarks_file"
 
-        # The commented code allow to create a random key
-        #local pos=$(expr $RANDOM % ${#alphnum})
-        #local key=${alphnum:$pos:1}
-        echo "$OPT_ADD:$abs_path" >> "$bookmarks_file"
-    elif [ "$OPT_REMOVE" != "" ]
+    elif $OPT_REMOVE
     then
-        grep "${OPT_REMOVE}:.*" ~/.config/pearl/bookmarks &> /dev/null || return 1
-
-        local bookmrks=$(sed -e "/$OPT_REMOVE:.*/d" "$bookmarks_file")
-        echo "$bookmrks" > "$bookmarks_file"
-    elif [ "$OPT_PRINT" != "" ]
+        if ! grep -q "^${OPT_KEY}:.*" $bookmarks_file
+        then
+            echo "The key ${OPT_KEY} does not exist."
+            return 1
+        fi
+        sed -ie "/$OPT_KEY:.*/d" "$bookmarks_file"
+    elif $OPT_PRINT
     then
-        output=$(grep "${OPT_PRINT}:.*" ~/.config/pearl/bookmarks | cut -d: -f2)
-        [ "$output" == "" ] && return 1
-        echo "$output"
-    elif [ "$OPT_GO" != "" ]
+        local path=$(grep "${OPT_KEY}:.*" $bookmarks_file | cut -d: -f2)
+        [ "$path" == "" ] && return 1
+        echo "$path"
+    elif $OPT_GO
     then
-        local path=$(awk -F ":" -v q=$OPT_GO '(q==$1){print $2}' $bookmarks_file)
+        local path=$(grep "${OPT_KEY}:.*" $bookmarks_file | cut -d: -f2)
         builtin cd "$path"
     else
-        if [ "$args" != "" ]
+        if [ "$ARGS" != "" ]
         then
-            builtin cd "$args"
+            builtin cd "$ARGS"
         else
-            awk -F ":" '{print $1") "$2}' $bookmarks_file
+            sed -e 's/:/) /' $bookmarks_file
         fi
     fi
-
     return 0;
 }
-
 
 # Manage the favourite commands
 # List, add, remove commands in a list and execute them using Cntrl-h combination.
