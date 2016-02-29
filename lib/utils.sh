@@ -1,5 +1,5 @@
 # This function is a wrapper for cd including some functionalities
-function cw() {
+function c() {
     #################### BEGIN OPTION PARSING ############################
     local OPT_ADD=false
     local OPT_KEY=""
@@ -31,7 +31,7 @@ function cw() {
     if $OPT_HELP
     then
         echo "Change workspace"
-        echo "Usage: cw [options]"
+        echo "Usage: c [options]"
         echo -e "List all the bookmarks entries"
         echo -e "Options:"
         echo -e "\t-g, --go [key]              Go to the directory specified by the key"

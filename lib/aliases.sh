@@ -4,9 +4,9 @@
 
 alias ..="cd .."
 alias ...="cd ../.."
-alias "cd.."="cd .."
-alias "cd-"="cd -"
-alias "cd~"="cd $HOME"
+alias "c.."="cd .."
+alias "c-"="cd -"
+alias "c~"="cd $HOME"
 
 # Mini-aliases :)
 alias j="jobs"
@@ -17,7 +17,6 @@ alias ls="/bin/ls --color=auto"
 
 alias l="ls --color=auto -h"
 alias a="ls -ha"
-alias c="cal"
 alias d="date"
 alias e='$EDITOR'
 alias p='pwd'

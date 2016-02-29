@@ -1,5 +1,5 @@
 # vim: ft=sh
-function cw
+function c
     set -l OPT_ADD false
     set -l OPT_KEY ""
     set -l OPT_REMOVE false
@@ -44,7 +44,7 @@ function cw
 
     if eval $OPT_HELP
         echo "Change workspace"
-        echo "Usage: cwd [options]"
+        echo "Usage: c [options]"
         echo -e "List all the bookmarks entries"
         echo -e "Options:"
         echo -e "\t-g, --go [key]              Go to the directory specified by the key"
