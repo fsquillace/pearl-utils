@@ -22,6 +22,9 @@ alias e='$EDITOR'
 alias p='pwd'
 alias h='hostname'
 alias t='tree'
+alias t1='t -L1'
+alias t2='t -L2'
+alias t2='t -L3'
 
 alias ll="l -l"
 alias la="a -l"
