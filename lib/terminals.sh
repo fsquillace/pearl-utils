@@ -1,3 +1,5 @@
+# This module has a dependency to utils.fish
+# vim: ft=sh
 
 if [ -n "$TMUX" ]; then
     # set TERM according to the parent terminal's TERM (see etc/tmux.conf)
@@ -33,11 +35,10 @@ fi
 # Set the terminfo for screen 256
 export TERMINFO_DIRS=$TERMINFO_DIRS:$PEARL_ROOT/share/terminfo
 
+# A tmux wrapper
+function txum(){
 
-function tmux(){
-
-    local tmux_command=$(which tmux 2> /dev/null)
-    [ ! -f "$tmux_command" ] && tmux_command="/usr/bin/tmux"
+    local tmux_command=tmux
 
     local OPT_GO=""
     local OPT_KILL=""
@@ -75,14 +76,15 @@ function tmux(){
 
     if [ "$OPT_GO" != "" ]
     then
-        local dir=$(cd -p $OPT_GO)
+        local dir=$(c -p $OPT_GO)
         [ "$dir" == "" ] && local dir="$PWD"
         builtin cd "$dir"
         # Set always the same $dir directory for the session
         if ! $tmux_command has-session -t "${OPT_GO}" &> /dev/null
         then
-            $tmux_command new-session -d -s "${OPT_GO}" &> /dev/null
-            $tmux_command set-option -t "${OPT_GO}" default-path $dir &> /dev/null
+            $tmux_command new-session -d -s "${OPT_GO}"
+            # It looks the following 'default-path' is deprecated
+            #$tmux_command set-option -t "${OPT_GO}" default-path $dir
         fi
         $tmux_command new-session -AD -s "${OPT_GO}"
         builtin cd "$OLDPWD"
