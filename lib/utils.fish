@@ -85,11 +85,11 @@ function c
         end
         sed -ie "/$OPT_KEY:.*/d" "$bookmarks_file"
     else if eval $OPT_PRINT
-        set -l path (grep "$OPT_KEY:.*" $bookmarks_file | cut -d: -f2)
+        set -l path (grep "^$OPT_KEY:.*" $bookmarks_file | cut -d: -f2)
         [ "$path" = "" ]; and return 1
         echo "$path"
     else if eval $OPT_GO
-        set -l path (grep "$OPT_KEY:.*" $bookmarks_file | cut -d: -f2)
+        set -l path (grep "^$OPT_KEY:.*" $bookmarks_file | cut -d: -f2)
         builtin cd "$path"
     else
         if [ "$ARGS" != "" ]

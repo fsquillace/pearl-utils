@@ -80,12 +80,12 @@ function c() {
         sed -ie "/$OPT_KEY:.*/d" "$bookmarks_file"
     elif $OPT_PRINT
     then
-        local path=$(grep "${OPT_KEY}:.*" $bookmarks_file | cut -d: -f2)
+        local path=$(grep "^${OPT_KEY}:.*" $bookmarks_file | cut -d: -f2)
         [ "$path" == "" ] && return 1
         echo "$path"
     elif $OPT_GO
     then
-        local path=$(grep "${OPT_KEY}:.*" $bookmarks_file | cut -d: -f2)
+        local path=$(grep "^${OPT_KEY}:.*" $bookmarks_file | cut -d: -f2)
         builtin cd "$path"
     else
         if [ "$ARGS" != "" ]
