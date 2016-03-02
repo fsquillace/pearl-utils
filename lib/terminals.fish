@@ -2,6 +2,34 @@
 # This module has a dependency to utils.fish
 # vim: ft=sh
 
+if [ -n "$TMUX" ]
+    # set TERM according to the parent terminal's TERM (see etc/tmux.conf)
+    switch $TERM
+        case *-256color
+            set -x TERM xterm-256color
+        case '*'
+            set -x TERM screen
+    end
+
+    set PEARL_SESSION_NAME (tmux display-message -p '#S')
+    set PEARL_WINDOW_INDEX (tmux display-message -p '#I')
+    set PEARL_PANE_INDEX (tmux display-message -p '#P')
+    [ -f $PEARL_HOME/envs/default ]; and source $PEARL_HOME/envs/default
+    [ -f $PEARL_HOME/envs/$PEARL_SESSION_NAME ]; and source $PEARL_HOME/envs/$PEARL_SESSION_NAME
+end
+
+
+if [ -n "$STY" ]
+    set PEARL_SESSION_NAME (echo $STY | cut -d . -f 2)
+    PEARL_WINDOW_INDEX=$WINDOW
+    [ -f $PEARL_HOME/envs/default ]; and source $PEARL_HOME/envs/default
+    [ -f $PEARL_HOME/envs/$PEARL_SESSION_NAME ]; and source $PEARL_HOME/envs/$PEARL_SESSION_NAME
+end
+
+
+# Set the terminfo for screen 256
+set -x TERMINFO_DIRS $TERMINFO_DIRS $PEARL_ROOT/share/terminfo
+
 # A tmux wrapper
 function txum
     set -l OPT_GO false
