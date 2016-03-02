@@ -60,7 +60,7 @@ function txum(){
     then
         $tmux_command --help
         echo ""
-        echo -e "Extra usage form the wrapper: tmux [options]"
+        echo -e "Extra usage form the txum wrapper: txum [options]"
         echo -e "Options:"
         echo -e "\t-g, --go              Go to the directory selected by the key and create a tmux session"
         echo -e "\t-k, --kill            Kill the tmux session identified by the key"
@@ -98,10 +98,9 @@ function txum(){
     return 0
 }
 
-function screen(){
+function scr(){
 
-    local screen_command=$(which screen 2> /dev/null)
-    [ ! -f "$screen_command" ] && screen_command="/usr/bin/screen"
+    local screen_command=screen
 
     local OPT_GO=""
     local OPT_KILL=""
@@ -123,10 +122,10 @@ function screen(){
     then
         $screen_command --help
         echo ""
-        echo -e "Extra usage form the wrapper: screen [options]"
+        echo -e "Extra usage form the scr wrapper: scr [options]"
         echo -e "Options:"
-        echo -e "\t-g, --go              Go to the directory selected by the key and create a screen session"
-        echo -e "\t-k, --kill            Kill the screen session identified by the key"
+        echo -e "\t-g, --go <key>        Go to the directory selected by the key and create a screen session"
+        echo -e "\t-k, --kill <key>      Kill the screen session identified by the key"
         echo -e "\t-h, --help            Show this help message"
         return 0
     fi
