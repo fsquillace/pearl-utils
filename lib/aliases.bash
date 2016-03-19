@@ -3,6 +3,7 @@
 #@@@@@@@@@@@@@@@@@@
 
 alias ~="cd $HOME"
+alias e="$EDITOR"
 
 # If the system has htop use it!
 [ -e /usr/bin/htop ] && alias top="/usr/bin/htop"

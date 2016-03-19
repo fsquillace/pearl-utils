@@ -18,7 +18,6 @@ alias ls="/bin/ls --color=auto"
 alias l="ls --color=auto -h"
 alias a="ls -ha"
 alias d="date"
-alias e='$EDITOR'
 alias p='pwd'
 alias h='hostname'
 alias t='tree'
