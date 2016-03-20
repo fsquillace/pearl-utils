@@ -1,3 +1,30 @@
+# Settings for __fish_git_prompt
+# For more information:
+# https://github.com/fish-shell/fish-shell/blob/master/share/functions/__fish_git_prompt.fish
+
+# Show unstaged (*) and staged (+) files
+set __fish_git_prompt_showdirtystate 'yes'
+# Show stashed ($) files
+set __fish_git_prompt_showstashstate 'yes'
+# Show untracked (%) files
+set __fish_git_prompt_showuntrackedfiles 'yes'
+# Show HEAD - upstream differences (<, >, <>, =)
+set __fish_git_prompt_showupstream 'informative'
+
+# Use default colors according to "git status -sb"
+set __fish_git_prompt_showcolorhints 'yes'
+# Set colors for branch and upstream
+set __fish_git_prompt_color_upstream_ahead green
+set __fish_git_prompt_color_upstream_behind red
+set __fish_git_prompt_color_branch white
+
+# Use a different separator (|) instead of space ( )
+set __fish_git_prompt_char_stateseparator '|'
+
+# Another setting is the following. This will not show stashed states though.
+# set __fish_git_prompt_showcolorhints 'yes'
+# set __fish_git_prompt_show_informative_status 'yes'
+
 function fish_prompt --description 'Write out the prompt'
     set -l last_status $status
 	and set retc green; or set retc red
